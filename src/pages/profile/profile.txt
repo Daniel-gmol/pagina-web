@@ -1,0 +1,3 @@
+Aquí va la página del perfil de usuario
+mostrandos su información personal, opción de edición
+y los puntajes previos en la experiencia (juego)
