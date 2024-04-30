@@ -22,14 +22,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        'barlow-thin': ['Barlow Thin', 'sans-serif'],
-        'barlow-light': ['Barlow Light', 'sans-serif'],
-        'barlow-regular': ['Barlow Regular', 'sans-serif'],
-        'barlow-semibold': ['Barlow Semibold', 'sans-serif'],
-        'barlow-bold': ['Barlow Bold', 'sans-serif'],
-        'barlow-black': ['Barlow Black', 'sans-serif'],
-        'barlow-italic': ['Barlow', 'sans-serif', 'italic'],
-        'barlow-condensed-regular': ['Barlow Condensed Regular', 'sans-serif'],
+        'barlow': ['Barlow', 'sans-serif'],
+        'barlow-condensed': ['Barlow Condensed', 'sans-serif'],
+        'barlow-semi-condensed': ['Barlow Semi Condensed', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-linear-primary-1': 'linear-gradient(var(--primary), var(--secondary-orange))',
