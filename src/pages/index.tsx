@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import Button from '@/components/Button'
+import Input from '@/components/Input'
 
 function login() {
   useEffect(() => {
@@ -8,22 +9,46 @@ function login() {
 
 
   return (
-    <div className='flex flex-col items-center gap-1 mt-10 space-y-10'>
-      
-      <img src='/RA-LOGO-PLACEHOLDER.png' alt='logo' width='220' className='object-scale-down max-h-full' />
+    <div className='w-full h-full flex flex-col justify-evenly items-center'>
 
-      <p className='font-barlow font-normal text-3xl'>Welcome !</p>
-      
-      {/* Convert into a component */}
-      <input type='text' placeholder='Username' className='object-scale-down w-200 max-h-full p-2 border-2 border-gray-400' />
-      <input type='password' placeholder='Password' className='w-200 h-10 p-2 border-2 border-gray-400' />
+      <img className='object-scale-down max-h-full mt-5' 
+           width='220'
+           alt='logo'
+           src='/RA-LOGO-PLACEHOLDER.png' 
+      />
 
-      <a href='#' className='text-primary  hover:underline'>Forgot your password?</a>
+      <p className='font-barlow font-normal text-3xl mt-10'>
+        Welcome !
+      </p>
 
-      <Button>Log in</Button>
-      <Button>Guest</Button>
+      <form className='flex flex-wrap w-full h-[15rem] mt-10 justify-center'>
+        <Input className='content-center' 
+                title='User' 
+                type='text'
+                autocomplete='username'
+        />  
+        <Input className='content-center mt-10'
+                title='Password'
+                type='password'
+                autocomplete='current-password'
+        />
+        <a href='#' 
+          className='text-primary hover:underline mt-3'>
+          Forgot your password?
+        </a>
+      </form>
 
-      <p>Don't have an account? <a href='#' className='text-primary hover:underline'>Sign up</a></p>
+      <div className='flex flex-col flex-wrap gap-3'>
+        <Button>Log in</Button>
+        <Button onClick={() => { window.location.href = '/menu'; }}>Guest</Button>
+
+        <p>Don't have an account?  
+        <a href='./signin' className=' text-primary hover:underline'>
+           Sign up
+        </a>
+      </p>
+      </div>
+
     </div>
   )
 
