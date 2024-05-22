@@ -4,10 +4,10 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 
 function Menu() {
   const { unityProvider } = useUnityContext({
-    loaderUrl: "build/nuevo.loader.js",
-    dataUrl: "build/nuevo.data",
-    frameworkUrl: "build/nuevo.framework.js",
-    codeUrl: "build/nuevo.wasm",
+    loaderUrl: "build/neve.loader.js",
+    dataUrl: "build/neve.data",
+    frameworkUrl: "build/neve.framework.js",
+    codeUrl: "build/neve.wasm",
   });
 
 
