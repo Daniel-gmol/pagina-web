@@ -1,2 +1,0 @@
-Aquí va la experiencia(juego) y el carrusel con la info de productos
-además debe tener un botón de navbar para llegar la perfil del usuario
