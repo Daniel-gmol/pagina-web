@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 
@@ -28,14 +28,12 @@ function login() {
     try {
 
 
-      const response = await axios.post(
-        'http://localhost:3000/api/login',
-        { 
-          email: username, 
-          password: password 
-        },
-        { withCredentials: true }
-      );
+      const response  = await axios.post(
+        'http://localhost:3000/api/login', {
+          email : username,
+          password_ : password
+        });
+        console.log(response)
     
       if (response.status === 200) {
         window.location.href = '/menu';
@@ -43,7 +41,8 @@ function login() {
         console.error('Failed to log in');
       }
     } catch (error) {
-      console.error('An error occurred while trying to log in', error);
+      const err = error as AxiosError
+      console.error(err.response?.data)
     }
   };
 
