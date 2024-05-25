@@ -29,7 +29,7 @@ function login() {
 
 
       const response  = await axios.post(
-        'http://localhost:3000/api/login', {
+        'https://rockwell-pl.onrender.com/api/login', {
           email : username,
           password_ : password
         });
@@ -62,7 +62,8 @@ function login() {
       <form className='form-log-in'
             onSubmit={handleLogin}
       >
-        <Input className='content-center' 
+        <Input className=''
+                classInput='input-component' 
                 title='Email' 
                 type='text'
                 autocomplete='username'
@@ -72,7 +73,8 @@ function login() {
                   // console.log('Username:', e.target.value);
                 }}
         />  
-        <Input className='content-center mt-10'
+        <Input className='mt-10'
+                classInput='input-component'
                 title='Password'
                 type='password'
                 autocomplete='current-password'
@@ -95,13 +97,13 @@ function login() {
             window.location.href = '/menu'; 
           }}
         >Guest</Button>
+      </form>
 
-        <p>Don't have an account?  
+      <p>Don't have an account?  
         <a href='./signin' className='text-primary hover:underline'>
            Sign up
         </a>
-        </p>
-      </form>
+      </p>
     </div>
   )
 }

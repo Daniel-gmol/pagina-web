@@ -24,7 +24,7 @@ function Menu() {
     };
   }, []);
   return (
-    <div className='flex flex-col items-center gap-5'style={{backgroundImage:"url('https://static.vecteezy.com/system/resources/previews/016/023/788/non_2x/luxury-and-premium-concept-abstract-red-and-white-overlapping-layers-background-for-business-presentation-vector.jpg')", backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>
+    <div className='flex flex-col items-center gap-5'style={{backgroundImage:`url(/fondoCoool2.png)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>
 
       {/*Game*/}
       <Unity  className='m-10 w-[64rem] h-[35rem]' unityProvider={unityProvider}></Unity>

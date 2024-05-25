@@ -1,18 +1,18 @@
 import React from 'react'
 
-function Input({className='', classButton='', classLabel='', ...props}) {
+function Input({className='', classInput='', classLabel='', ...props}) {
     const divClasses = 
-        `flex flex-wrap flex-col w-full
+        `inline-block
         ${className}`
     
     const inputClasses = 
         `
-        border-b-2 outline-none border-black 
+        border-b-2 outline-none border-black flex
         text-left
-        ${classButton}`
+        ${classInput}`
     
     const labelClasses = 
-        `Open-Sans text-sm text-left
+        `Open-Sans text-sm text-left flex
         ${classLabel}`
 
     return (
