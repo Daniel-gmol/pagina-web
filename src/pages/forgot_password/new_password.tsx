@@ -23,12 +23,16 @@ function NewPassword() {
 
   return (
     <div className='container-log-in'>
-      <img
-        className='img-log-in'
-        alt='logo'
-        src='/RA-LOGO-PLACEHOLDER.png'
-      />
-
+      
+      <div>
+        <a href='/'>
+          <img
+            className='img-log-in'
+            alt='logo'
+            src='/RA-LOGO-PLACEHOLDER.png'
+          />
+        </a>
+      </div>
       <h1 style={{ marginBottom: '1.5rem' }}>
         New Password
       </h1>
