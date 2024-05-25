@@ -1,57 +1,99 @@
-import React, { useEffect } from 'react'
-import Button from '@/components/Button'
-import Input from '@/components/Input'
+import React, { useState, useEffect } from 'react';
+import Button from '@/components/Button';
+import Input from '@/components/Input';
 
 function index() {
+  const [username, setUsername] = useState('');
+  const [confirmationCode, setConfirmationCode] = useState('');
+  const [buttonText, setButtonText] = useState('Send code');
+  const [timer, setTimer] = useState(0);
+
   useEffect(() => {
-    document.title  = 'Forgot Password'  
-  }, [])
+    document.title = 'Forgot Password';
+  }, []);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (timer === 0 && buttonText === 'Resend code') {
+      setButtonText('Send code');
+    }
+    return () => clearInterval(interval);
+  }, [timer, buttonText]);
+
+  const handleClick = () => {
+    if (buttonText === 'Send code') {
+      // Lógica para enviar el código
+      setButtonText('Resend code');
+      setTimer(30);
+    }
+  };
 
   return (
-      <div className='container-log-in'>
-          <img className='img-log-in' 
-              alt='logo'
-              src='/RA-LOGO-PLACEHOLDER.png' 
+    <div className='container-log-in'>
+      
+      <div>
+        <a href='/'>
+          <img 
+            className='img-log-in' 
+            alt='logo' 
+            src='/RA-LOGO-PLACEHOLDER.png'
           />
-        
-          <h1 style={{ marginBottom: '1.5rem' }}>
-            Forgot password !
-          </h1>
+        </a>  
+      </div>
 
+      <h1 style={{ marginBottom: '1.5rem' }}>
+        Forgot password!
+      </h1>
 
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Input 
-              className='content-center mt-7' 
-              title='Email' 
-              type='text'
-              autocomplete='username'
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                console.log('Username:', e.target.value);
-              }}
-              style={{ flexGrow: 1 }} // Esto hace que el campo de entrada ocupe todo el espacio disponible
-            /> 
-            <Button style={{ marginLeft: '1rem' }}>Send code</Button>
-          </div>
+      
+      <Input className='mt-7'
+        classInput='input-component'
+        title='Email'
+        type='text'
+        autoComplete='username'
+        value={username}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setUsername(e.target.value);
+          console.log('Username:', e.target.value);
+        }}
+      />
 
+      <div style={{ padding: '25px' }}>
+        <Button 
+          style={{ padding: '10px 20px' }}
+          onClick={handleClick}
+          disabled={timer > 0} // Deshabilita el botón mientras el temporizador está en marcha
+        >
+          {buttonText} {timer > 0 && `(${timer})`}
+        </Button>
+      </div>
+      
 
-            <Input className='content-center mt-7'
-                    title='Confirm '
-                    type='password'
-                    autocomplete='current-password'
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      console.log('Password:', e.target.value);
-                    }}
-            />
+      <Input 
+        classInput='input-component'
+        title='Confirmation code'
+        type='password'
+        autoComplete='current-password'
+        value={confirmationCode}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setConfirmationCode(e.target.value);
+          console.log('Confirmation Code:', e.target.value);
+        }}
+      />
 
-            <div style={{ padding: '40px' }}>
-              <a href='#'>
-                <Button className='border-2 min-w-32 min-h-12' > Save new password</Button>
-              </a>
-            </div>
+      <div style={{ padding: '25px' }}>
+        <a href='#'>
+          <Button style = {{ padding: '10px 20px'}}>
+            Confirm
+          </Button>
+        </a>
+      </div>
     </div>
-  )
+  );
 }
 
-
-
-export default index
+export default index;

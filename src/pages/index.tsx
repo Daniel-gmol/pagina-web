@@ -85,7 +85,7 @@ function login() {
                 }}
         />
 
-        <a href='./forgot' 
+        <a href='./forgot_password' 
           className='text-primary hover:underline mt-3'>
           Forgot your password?
         </a>
