@@ -1,18 +1,18 @@
 import React from 'react'
 
-function Input({className='', classButton='', classLabel='', ...props}) {
+function Input({className='', classInput='', classLabel='', ...props}) {
     const divClasses = 
-        `flex flex-wrap flex-col w-full
+        `inline-block
         ${className}`
     
     const inputClasses = 
-        `w-[40%] h-8
-        border-b-2 outline-none border-black 
+        `
+        border-b-2 outline-none border-black flex
         text-left
-        ${classButton}`
+        ${classInput}`
     
     const labelClasses = 
-        `Open-Sans text-sm text-left
+        `Open-Sans text-sm text-left flex
         ${classLabel}`
 
     return (
@@ -22,9 +22,12 @@ function Input({className='', classButton='', classLabel='', ...props}) {
         </label>
         <input className={inputClasses} 
                 id={props.title}
-                type={props.type}
                 title={props.title}
-                autoComplete='props.autocomplete'/>
+                type={props.type}
+                autoComplete={props.autocomplete}
+                value={props.value}
+                onChange={props.onChange}
+                />
     </div>
   )
 }

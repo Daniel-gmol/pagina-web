@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import axios, { AxiosError } from 'axios'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 
@@ -7,51 +8,104 @@ function login() {
     document.title  = 'Log in'  
   }, [])
 
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  //es un poco de desastre jajaja
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    console.log("entro")
+
+    // Check if username or password is empty
+    if (!username || !password) {
+      return;
+    } else {
+      console.log('Username:', username);
+      console.log('Password:', password);
+    } 
+  
+    try {
+
+
+      const response  = await axios.post(
+        'https://rockwell-pl.onrender.com/api/login', {
+          email : username,
+          password_ : password
+        });
+        console.log(response)
+    
+      if (response.status === 200) {
+        window.location.href = '/menu';
+      } else {
+        console.error('Failed to log in');
+      }
+    } catch (error) {
+      const err = error as AxiosError
+      console.error(err.response?.data)
+    }
+  };
+
 
   return (
-    <div className='w-full h-full flex flex-col justify-evenly items-center'>
+    <div className='container-log-in'>
 
-      <img className='object-scale-down max-h-full mt-5' 
-           width='220'
+      <img className='img-log-in' 
            alt='logo'
            src='/RA-LOGO-PLACEHOLDER.png' 
       />
-
-      <p className='font-barlow font-normal text-3xl mt-10'>
+    
+      <h1 className='h1-log-in'>
         Welcome !
-      </p>
+      </h1>
 
-      <form className='flex flex-wrap w-full h-[15rem] mt-10 justify-center'>
-        <Input className='content-center' 
-                title='User' 
+      <form className='form-log-in'
+            onSubmit={handleLogin}
+      >
+        <Input className=''
+                classInput='input-component' 
+                title='Email' 
                 type='text'
                 autocomplete='username'
+                value={username}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setUsername(e.target.value);
+                  // console.log('Username:', e.target.value);
+                }}
         />  
-        <Input className='content-center mt-10'
+        <Input className='mt-10'
+                classInput='input-component'
                 title='Password'
                 type='password'
                 autocomplete='current-password'
+                value={password}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setPassword(e.target.value);
+                  // console.log('Password:', e.target.value);
+                }}
         />
-        <a href='#' 
+
+        <a href='./forgot' 
           className='text-primary hover:underline mt-3'>
           Forgot your password?
         </a>
+
+        <Button className='border-2 min-w-32 min-h-12'>Log in</Button>
+        <Button className='border-2 min-w-32 min-h-12' 
+          onClick={(event: { preventDefault: () => void }) => { 
+            event.preventDefault(); 
+            window.location.href = '/menu'; 
+          }}
+        >Guest</Button>
       </form>
 
-      <div className='flex flex-col flex-wrap gap-3'>
-        <Button>Log in</Button>
-        <Button onClick={() => { window.location.href = '/menu'; }}>Guest</Button>
-
-        <p>Don't have an account?  
-        <a href='./signin' className=' text-primary hover:underline'>
+      <p>Don't have an account?  
+        <a href='./signin' className='text-primary hover:underline'>
            Sign up
         </a>
       </p>
-      </div>
-
     </div>
   )
-
 }
 
 export default login
