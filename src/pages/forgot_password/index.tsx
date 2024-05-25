@@ -3,9 +3,9 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 
 function index() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [confirmationCode, setConfirmationCode] = useState('');
-  const [buttonText, setButtonText] = useState('Send code');
+  const [buttonText, setButtonText] = useState('Send Code');
   const [timer, setTimer] = useState(0);
 
   useEffect(() => {
@@ -16,25 +16,28 @@ function index() {
     let interval: NodeJS.Timeout;
     if (timer > 0) {
       interval = setInterval(() => {
-        setTimer((prev) => prev - 1);
+        setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
-    } else if (timer === 0 && buttonText === 'Resend code') {
-      setButtonText('Send code');
+    } else if (timer === 0 && buttonText === 'Resend Code') {
+      setButtonText('Send Code');
     }
     return () => clearInterval(interval);
   }, [timer, buttonText]);
 
-  const handleClick = () => {
-    if (buttonText === 'Send code') {
-      // Lógica para enviar el código
-      setButtonText('Resend code');
-      setTimer(30);
+  const handleSendCodeClick = () => {
+    if (buttonText === 'Send Code') {
+      // Aquí va la lógica para enviar el código de confirmación al correo electrónico
+      setButtonText('Resend Code');
+      setTimer(30); // Tiempo en segundos para volver a enviar el código
     }
+  };
+
+  const handleConfirmClick = () => {
+    // Aquí va la lógica para confirmar el código de confirmación ingresado por el usuario
   };
 
   return (
     <div className='container-log-in'>
-      
       <div>
         <a href='/'>
           <img 
@@ -46,38 +49,37 @@ function index() {
       </div>
 
       <h1 style={{ marginBottom: '1.5rem' }}>
-        Forgot password!
+        Forgot Password
       </h1>
-
       
-      <Input className='mt-7'
+      <Input 
+        className='mt-7'
         classInput='input-component'
         title='Email'
-        type='text'
+        type='email'
         autoComplete='username'
-        value={username}
+        value={email}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setUsername(e.target.value);
-          console.log('Username:', e.target.value);
+          setEmail(e.target.value);
+          console.log('Email:', e.target.value);
         }}
       />
 
       <div style={{ padding: '25px' }}>
         <Button 
           style={{ padding: '10px 20px' }}
-          onClick={handleClick}
+          onClick={handleSendCodeClick}
           disabled={timer > 0} // Deshabilita el botón mientras el temporizador está en marcha
         >
           {buttonText} {timer > 0 && `(${timer})`}
         </Button>
       </div>
       
-
       <Input 
         classInput='input-component'
-        title='Confirmation code'
-        type='password'
-        autoComplete='current-password'
+        title='Confirmation Code'
+        type='text'
+        autoComplete='off'
         value={confirmationCode}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setConfirmationCode(e.target.value);
@@ -86,11 +88,13 @@ function index() {
       />
 
       <div style={{ padding: '25px' }}>
-        <a href='#'>
-          <Button style = {{ padding: '10px 20px'}}>
-            Confirm
-          </Button>
-        </a>
+        <Button 
+          style={{ padding: '10px 20px' }}
+          onClick={handleConfirmClick}
+          disabled={!confirmationCode}
+        >
+          Confirm
+        </Button>
       </div>
     </div>
   );
