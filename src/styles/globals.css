@@ -58,6 +58,10 @@ input{
   width: 40rem;
 }
 
+
+
+
+
 .button-log-in {
   display: flex;
   flex-direction: column;
@@ -78,6 +82,7 @@ input{
   height: 100%;
   width: 100%;
 }
+
 
 
 ::-webkit-scrollbar {
