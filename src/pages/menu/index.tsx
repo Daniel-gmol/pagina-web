@@ -1,13 +1,35 @@
 import React, { useEffect } from 'react';
-import Carousel from '@/components/Carousel';
+import axios, {AxiosError} from 'axios';
 import NewCarousel from '@/components/NewCarousel';
 import { Unity, useUnityContext } from "react-unity-webgl";
+import { withAuth } from '@/lib/auth';
 
 
-function Menu() {
+function Menu({isAuthenticated}: {isAuthenticated: boolean}) {
   useEffect(() => {
     document.title  = 'Menu'  
   }, [])
+
+  const logout = async () => {
+    try {
+        const response = await axios.post(
+            'http://localhost:3000/api/logout', 
+            {}, 
+            { withCredentials: true }
+        );
+        if (response.status === 200) {
+            // Redirect to login page or update state to reflect logged out status
+            window.location.href = '/';
+        } else {
+            console.error('Logout failed');
+        }
+    } catch (error) {
+        const err = error as AxiosError;
+        console.error('Logout failed');
+        console.error(err.response?.data);
+    }
+};
+
 
   
   const { unityProvider } = useUnityContext({
@@ -16,15 +38,26 @@ function Menu() {
     frameworkUrl: "build/neve.framework.js",
     codeUrl: "build/neve.wasm",
   });
-  useEffect(() => {
-    document.body.classList.add('menu-background');
-    // Retirar la clase de fondo cuando el componente se desmonte
-    return () => {
-      document.body.classList.remove('menu-background');
-    };
-  }, []);
+
   return (
-    <div className='flex flex-col items-center gap-5'style={{backgroundImage:`url(/fondoCoool2.png)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>
+    /* 
+    The background image used in the Menu component is attributed to Vecteezy.com
+    URL: https://www.vecteezy.com/free-vector/abstract
+    */
+    <div className='flex flex-col items-center gap-5'style={{backgroundImage:`url(/vecteezy_abstract-colored-wave-card-set-background-vector-illustration_.jpg)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>
+      <nav className='sticky top-0 flex justify-evenely w-full p-5 bg-white shadow-md'>
+        <button className='text-black ml-10 border-transparent border-b-4
+                            hover:border-primary '>
+                                            
+                Profile
+        </button>
+        {isAuthenticated && <button className='ext-black ml-10 border-transparent border-b-4
+                            hover:border-primary'
+                onClick={logout}
+        >
+                Logout
+        </button>}
+      </nav>
 
       {/*Game*/}
       <Unity  className='m-10 w-[64rem] h-[35rem]' unityProvider={unityProvider}></Unity>
@@ -34,8 +67,15 @@ function Menu() {
         <NewCarousel className='w-[50%] h-[10%]' cardsData={5}/>
       </div>
       <br/>
+
     </div>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const { req } = context;
+  const { cookie } = req.headers;
+  return withAuth(context, cookie);
 }
 
 export default Menu;
