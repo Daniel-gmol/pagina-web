@@ -5,6 +5,8 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 import { withAuth } from '@/lib/auth';
 
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 function Menu({isAuthenticated}: {isAuthenticated: boolean}) {
   useEffect(() => {
     document.title  = 'Menu'  
@@ -13,7 +15,7 @@ function Menu({isAuthenticated}: {isAuthenticated: boolean}) {
   const logout = async () => {
     try {
         const response = await axios.post(
-            'http://localhost:3000/api/logout', 
+            `${API_URL}/api/logout`, 
             {}, 
             { withCredentials: true }
         );

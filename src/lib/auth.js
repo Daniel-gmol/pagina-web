@@ -1,6 +1,9 @@
 // lib/auth.js
 import axios from "axios";
 
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export async function withAuth(context, cookie) {
   if (!cookie) {
     return {
@@ -12,7 +15,7 @@ export async function withAuth(context, cookie) {
   }
 
   try {
-    const response = await axios.get('http://localhost:3000/api/check-auth', {
+    const response = await axios.get(`${API_URL}api/check-auth`, {
       headers: {
         Cookie: cookie,
       },

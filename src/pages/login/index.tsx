@@ -3,6 +3,9 @@ import axios, { AxiosError } from 'axios'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 function login() {
   useEffect(() => {
     document.title  = 'Log in'
@@ -49,7 +52,7 @@ function login() {
   
     try {
       const response  = await axios.post(
-        'http://localhost:3000/api/login', {
+         `${API_URL}/api/login`, {
           email : username,
           password_ : password
         },
