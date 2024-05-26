@@ -20,6 +20,7 @@ const config: Config = {
           'green': '#77C14C',
           'grey': '#E1EBF4',
         },
+        error: '#E71A37',
       },
       fontFamily: {
         'barlow': ['Barlow', 'sans-serif'],
