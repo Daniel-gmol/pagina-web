@@ -2,26 +2,25 @@ import React, { useEffect } from 'react'
 import axios, { AxiosError } from 'axios'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
+import { withAuth } from '@/lib/auth'
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-function login() {
+function login({user} : {user: any}) {
   useEffect(() => {
     document.title  = 'Log in'
-    // const checkAuthentication = async () => {
-    //   try {
-    //     const response = await axios.get('http://localhost:3000/api/check-auth', { withCredentials: true });
-    //     if (response.data.isAuthenticated) {
-    //       window.location.href = '/menu';
-    //     }
-    //   } catch (error) {
-    //     const err = error as AxiosError
-    //     console.error(err.response?.data)
-    //   }
-    // };
-
-    // checkAuthentication();
+    if (user){
+      if (user.rol === 'user') {
+        setTimeout(() => {
+            window.location.href = '/menu';
+        }, 750);
+    } else if (user.rol === 'admin') {
+        setTimeout(() => {
+            window.location.href = '/admin';
+        }, 750);
+    }
+    }
   }, [])
 
   const [username, setUsername] = React.useState('');
@@ -44,6 +43,9 @@ function login() {
 
     // Check if username or password is empty
     if (!username || !password) {
+      setError(true);
+      setIsValidPass(false);
+      setIsValidUser(false);
       return;
     } else {
       console.log('Username:', username);
@@ -91,7 +93,7 @@ function login() {
         <Input className=''
                 classInput={`input-component ${isValidUser ? '' : 'invalid-input'}`}
                 classLabel={` ${isValidUser ? 'font-medium' : 'invalid-label'}`}
-                title='Email' 
+                title='email' 
                 type='text'
                 autocomplete='username'
                 value={username}
@@ -114,7 +116,7 @@ function login() {
         <Input className='mt-10'
                 classInput={`input-component ${isValidPass ? '' : 'invalid-input'}`}
                 classLabel={` ${isValidPass ? 'font-medium' : 'invalid-label'}`}
-                title='Password'
+                title='password'
                 type={showPassword ? 'text' : 'password'}
                 autocomplete='current-password'
                 value={password}
@@ -127,7 +129,7 @@ function login() {
                 toggleShowPassword={toggleShowPassword}
         />
 
-        <a href='./forgot' 
+        <a href='./forgot_password' 
           className='text-primary hover:underline mt-3'>
           Forgot your password?
         </a>
@@ -151,5 +153,9 @@ function login() {
     </div>
   )
 }
+
+export async function getServerSideProps(context: any) {
+  return withAuth(context, false);
+} 
 
 export default login
