@@ -2,7 +2,7 @@ import React from 'react'
 
 function Input({className='', classInput='', classLabel='', ...props}) {
     const divClasses = 
-        `inline-block h-12
+        `inline-block relative h-12
         ${className}`
     
     const inputClasses = 
@@ -21,19 +21,20 @@ function Input({className='', classInput='', classLabel='', ...props}) {
                 htmlFor={props.title}>{props.title}
         </label>
         <input className={inputClasses} 
-                id={props.title}
+                name={props.title}
                 title={props.title}
                 type={props.type}
                 autoComplete={props.autocomplete}
                 value={props.value}
                 onChange={props.onChange}
                 onBlur={props.onBlur}
+                required={props.required}
         />
         {!props.isValid && <small className="error-text">{props.errorMessage}</small>}
         {props.title === 'Password' && (
             <button
                 type="button"
-                className={`float-right text-right' ${!props.isValid ? 'mt-[-1.7rem] mr-[-8.75rem]' : 'mt-[-1.7rem]'}`}
+                className={`absolute right-1 top-4    '`}
                 onClick={props.toggleShowPassword}
             >
             {props.showPassword ? 'HIDE' : 'SHOW'}
