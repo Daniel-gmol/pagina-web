@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import axios, {AxiosError} from 'axios';
 import NewCarousel from '@/components/NewCarousel';
 import { Unity, useUnityContext } from "react-unity-webgl";
+import { parseCookies } from "nookies";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { withAuth } from '@/lib/auth';
-
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-function Menu({isAuthenticated}: {isAuthenticated: boolean}) {
+function Menu({user} : {user: any}) {
+
   useEffect(() => {
-    document.title  = 'Menu'  
+    document.title  = 'Menu'
   }, [])
 
   const logout = async () => {
@@ -32,8 +34,6 @@ function Menu({isAuthenticated}: {isAuthenticated: boolean}) {
     }
 };
 
-
-  
   const { unityProvider } = useUnityContext({
     loaderUrl: "build/neve.loader.js",
     dataUrl: "build/neve.data",
@@ -47,17 +47,31 @@ function Menu({isAuthenticated}: {isAuthenticated: boolean}) {
     URL: https://www.vecteezy.com/free-vector/abstract
     */
     <div className='flex flex-col items-center gap-5'style={{backgroundImage:`url(/vecteezy_abstract-colored-wave-card-set-background-vector-illustration_.jpg)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>
+      
       <nav className='sticky top-0 flex justify-evenely w-full p-5 bg-white shadow-md'>
-        <button className='text-black ml-10 border-transparent border-b-4
-                            hover:border-primary '>
-                                            
-                Profile
-        </button>
-        {isAuthenticated && <button className='ext-black ml-10 border-transparent border-b-4
-                            hover:border-primary'
-                onClick={logout}
-        >
-                Logout
+        {!user && <button 
+            className='text-black ml-10 border-transparent border-b-4
+                      hover:border-primary '
+            onClick={() => window.location.href = '/signin'}>
+            Sign up
+        </button>}
+        {user && <button 
+            className='text-black ml-10 border-transparent border-b-4
+                      hover:border-primary '
+            onClick={() => window.location.href = '/profile'}>
+            Profile
+        </button>}
+        {user && user.rol === 'admin' && <button 
+            className='ext-black ml-10 border-transparent border-b-4
+                      hover:border-primary'
+            onClick={() => window.location.href = '/admin'}>
+            Admin
+        </button>}
+        {user && <button 
+            className='ext-black ml-10 border-transparent border-b-4
+                      hover:border-primary'
+            onClick={logout}>
+            Logout
         </button>}
       </nav>
 
@@ -75,9 +89,7 @@ function Menu({isAuthenticated}: {isAuthenticated: boolean}) {
 }
 
 export async function getServerSideProps(context: any) {
-  const { req } = context;
-  const { cookie } = req.headers;
-  return withAuth(context, cookie);
+  return withAuth(context, false);
 }
 
 export default Menu;
