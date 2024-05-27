@@ -1,31 +1,32 @@
-// lib/auth.js
-import axios from "axios";
 
+import { parseCookies } from "nookies";
+import jwt from "jsonwebtoken";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export async function withAuth(context, defaultRedirect) {
+  const cookies = parseCookies(context);
+  const token = cookies.authToken;
 
-export async function withAuth(context, cookie) {
-  if (!cookie) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
+  if (!token) {
+    if (defaultRedirect) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    } else {
+      return {
+        props: { user: null },
+      };
     };
   }
 
   try {
-    const response = await axios.get(`${API_URL}api/check-auth`, {
-      headers: {
-        Cookie: cookie,
-      },
-      withCredentials: true,
-    });
+    const decoded = jwt.verify(token, process.env.SECRET);
     return {
-      props: { isAuthenticated: response.data.isAuthenticated },
+      props: { user: decoded },
     };
   } catch (error) {
-    console.error(error);
     return {
       redirect: {
         destination: "/login",
