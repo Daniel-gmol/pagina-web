@@ -17,6 +17,9 @@ html, body, #__next {
   display: none;
 }
 
+input[type="password"]::-ms-reveal {
+  display: none;
+}
 
 .loading{
   height:4rem; 
