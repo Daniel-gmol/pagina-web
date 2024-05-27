@@ -29,7 +29,7 @@ function NewPassword() {
           <img
             className='img-log-in'
             alt='logo'
-            src='/RA-LOGO-PLACEHOLDER.png'
+            src='/rockwellautomation-logo.png'
           />
         </a>
       </div>

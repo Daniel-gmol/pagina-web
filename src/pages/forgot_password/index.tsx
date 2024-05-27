@@ -43,7 +43,7 @@ function index() {
           <img 
             className='img-log-in' 
             alt='logo' 
-            src='/RA-LOGO-PLACEHOLDER.png'
+            src='/rockwellautomation-logo.png'
           />
         </a>  
       </div>
@@ -67,6 +67,7 @@ function index() {
 
       <div style={{ padding: '25px' }}>
         <Button 
+          className='border-2 w-32'
           style={{ padding: '10px 20px' }}
           onClick={handleSendCodeClick}
           disabled={timer > 0} // Deshabilita el botón mientras el temporizador está en marcha
@@ -89,6 +90,7 @@ function index() {
 
       <div style={{ padding: '25px' }}>
         <Button 
+          className='border-2 w-32'
           style={{ padding: '10px 20px' }}
           onClick={handleConfirmClick}
           disabled={!confirmationCode}
