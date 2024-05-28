@@ -93,7 +93,7 @@ function login({user} : {user: any}) {
         <Input className=''
                 classInput={`input-component ${isValidUser ? '' : 'invalid-input'}`}
                 classLabel={` ${isValidUser ? 'font-medium' : 'invalid-label'}`}
-                title='email' 
+                title='Email' 
                 type='text'
                 autocomplete='username'
                 value={username}
@@ -116,7 +116,7 @@ function login({user} : {user: any}) {
         <Input className='mt-10'
                 classInput={`input-component ${isValidPass ? '' : 'invalid-input'}`}
                 classLabel={` ${isValidPass ? 'font-medium' : 'invalid-label'}`}
-                title='password'
+                title='Password'
                 type={showPassword ? 'text' : 'password'}
                 autocomplete='current-password'
                 value={password}
