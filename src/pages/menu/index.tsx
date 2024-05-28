@@ -5,10 +5,11 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 import { parseCookies } from "nookies";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { withAuth } from '@/lib/auth';
+import { getProds } from '@/lib/prods';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-function Menu({user} : {user: any}) {
+function Menu({user, prodData} : {user: any, prodData: any}) {
 
   useEffect(() => {
     document.title  = 'Menu'
@@ -52,6 +53,12 @@ function Menu({user} : {user: any}) {
         {!user && <button 
             className='text-black ml-10 border-transparent border-b-4
                       hover:border-primary '
+            onClick={() => window.location.href = '/login'}>
+            Log in
+        </button>}
+        {!user && <button 
+            className='text-black ml-10 border-transparent border-b-4
+                      hover:border-primary '
             onClick={() => window.location.href = '/signin'}>
             Sign up
         </button>}
@@ -76,12 +83,12 @@ function Menu({user} : {user: any}) {
       </nav>
 
       {/*Game*/}
-      <Unity  className='m-10 w-[64rem] h-[35rem]' unityProvider={unityProvider}></Unity>
+      <Unity  id="unity-canvas" className='m-10 w-[64rem] h-[35rem]' unityProvider={unityProvider}></Unity>
 
       {/*Carousel*/}
-      <div className='w-[70%] h-[10%]'>
-        <NewCarousel className='w-[50%] h-[10%]' cardsData={5}/>
-      </div>
+      {prodData && <div className='w-[70%] h-[10%]'>
+        <NewCarousel className='w-[50%] h-[10%]' cardsData={prodData}/>
+      </div>}
       <br/>
 
     </div>
@@ -89,7 +96,14 @@ function Menu({user} : {user: any}) {
 }
 
 export async function getServerSideProps(context: any) {
-  return withAuth(context, false);
+  const { props: userProps } = await withAuth(context, false);
+  const { props: prodProps }  = await getProds(context);
+  return {
+    props: {
+      user: userProps ? userProps.user : undefined,
+      prodData: prodProps ? prodProps.data : undefined
+    }
+  }
 }
 
 export default Menu;
