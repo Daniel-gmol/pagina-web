@@ -47,7 +47,7 @@ function profile({user} : {user: any}) {
         <h1 className='mt-10'>{user.first_name}</h1>
         <p>{user.email}</p>
         
-        <h2 className='mt-20'>Top score: {user.tscore}</h2>
+        <h2 className='mt-20'>Top score: {user.max_score}</h2>
         
       </div>
     )

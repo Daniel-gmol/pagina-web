@@ -8,11 +8,11 @@ function HomePage({user}: {user: any}) {
         if (user.rol === 'user') {
             setTimeout(() => {
                 window.location.href = '/menu';
-            }, 750);
+            }, 250);
         } else if (user.rol === 'admin') {
             setTimeout(() => {
                 window.location.href = '/admin';
-            }, 750);
+            }, 250);
         }
     }, []);
 
