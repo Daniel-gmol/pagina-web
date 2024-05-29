@@ -1,13 +1,14 @@
 import axios, {AxiosError} from 'axios';
 
 export default async function handler(req: { url: string; method: any; headers: any; body: any; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: any): void; new(): any; }; }; }) {
-  const apiUrl = 'https://proxy-rock.onrender.com' + req.url;
+  // Remove "/api/proxy" from the path and forward the rest to the backend server
+  const apiUrl = 'https://proxy-rock.onrender.com' + req.url.replace('/api/proxy', '');
   
   console.log('Request method:', req.method)
   console.log('Request URL:', apiUrl)
   console.log('Request headers:', req.headers)
   console.log('Request body:', req.body)
-  
+
   
   try {
     const response = await axios({
