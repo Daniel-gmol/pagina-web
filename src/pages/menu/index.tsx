@@ -28,18 +28,22 @@ function Menu({user, prodData} : {user: any, prodData: any}) {
         } else {
             console.error('Logout failed');
         }
-    } catch (error) {
-        const err = error as AxiosError;
+    } catch (error : unknown) {
+      if (axios.isAxiosError(error)) {
         console.error('Logout failed');
-        console.error(err.response?.data);
+        console.error(error.response?.data);
+      } else {
+          // Handle any other types of errors
+          console.error(error);
+      }
     }
 };
 
   const { unityProvider } = useUnityContext({
-    loaderUrl: "build/neve.loader.js",
-    dataUrl: "build/neve.data",
-    frameworkUrl: "build/neve.framework.js",
-    codeUrl: "build/neve.wasm",
+    loaderUrl: "build/save_rock.loader.js",
+    dataUrl: "build/save_rock.data.unityweb",
+    frameworkUrl: "build/save_rock.framework.js.unityweb",
+    codeUrl: "build/save_rock.wasm.unityweb",
   });
 
   return (
@@ -83,11 +87,11 @@ function Menu({user, prodData} : {user: any, prodData: any}) {
       </nav>
 
       {/*Game*/}
-      <Unity  id="unity-canvas" className='m-10 w-[64rem] h-[35rem]' unityProvider={unityProvider}></Unity>
+      <Unity  id="unity-canvas" className='m-10 w-[64rem] h-[36rem]' unityProvider={unityProvider}></Unity>
 
       {/*Carousel*/}
       {prodData && <div className='w-[70%] h-[10%]'>
-        <NewCarousel className='w-[50%] h-[10%]' cardsData={prodData}/>
+        <NewCarousel className='w-[50%] h-[10%]' cardsData={prodData} userData={user}/>
       </div>}
       <br/>
 
