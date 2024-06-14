@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import { withAuth } from '@/lib/auth'
 import axios, { AxiosError } from 'axios'
+import Table from '@/components/Table'
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
 
 function admin({user}: {user: any}) {
@@ -109,6 +110,7 @@ function admin({user}: {user: any}) {
 
         {renderChart}
         <span>Top scores</span>
+        <Table />
         
       </div>
     )
