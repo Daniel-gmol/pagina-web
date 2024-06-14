@@ -2,6 +2,7 @@ import React from "react";
 import Card from "@/components/Card";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, Mousewheel } from "swiper/modules";
+import axios from "axios";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -11,9 +12,11 @@ import "swiper/css/mousewheel";
 
 function NewCarousel({
   cardsData,
+  userData,
   className,
 }: {
   cardsData: any;
+  userData: any;
   className: string;
 }) {
   const pagination = {
@@ -22,6 +25,8 @@ function NewCarousel({
       return '<span class="' + className + '">' + "</span>";
     },
   };
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   return (
     <Swiper
@@ -69,8 +74,19 @@ function NewCarousel({
             buttonClass="ra-gradient"
             title={card.name_}
             img={card.image}
-            onCardClick={() => {
-              window.location.href = "/menu";
+            onCardClick={async () => {
+              try {
+                const response = await axios.get(`${API_URL}/api/products/clicks`, {
+                  params: {
+                    idUser: userData.id,
+                    idProduct: card.id,
+                  },
+                  withCredentials: true,
+                });
+                console.log(response.data);
+              } catch (error) {
+                console.error(error);
+              }
             }}
           />
         </SwiperSlide>
